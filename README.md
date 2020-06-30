@@ -88,6 +88,12 @@ address | bit | Definition | default
 0x88: SPI mode 0 or 1, 0x87: SPI mode 2 or 3" | 0x88
 0x0C | [7:0] | "Bidirectional SO support for reading
 0x3F:normal, 0x5B:SS0, 0x6B:SS2, 0x6A:SS3, 0x55:SS0 and SS1, 0x56:SS0 and SS2, 0x42:SS1 and SS3, 0x40:always" | 0x3F
+0x75 | R | [7:6] | Reserve | --
+ |  | [5] | GPIO3 input value 0:Low, 1: High | 
+ |  | [4] | GPIO2 input value 0:Low, 1: High | 
+ |  | [3] | GPIO1 input value 0:Low, 1: High | 
+ |  | [2] | GPIO0 input value 0:Low, 1: High | 
+ |  | [1:0] | Reserve | 
 
 
 ## 設計データ
