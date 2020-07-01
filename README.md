@@ -16,7 +16,7 @@ I2CインタフェースからSPIに対応したデバイスへのアクセス�
   
 ### 本デザインの使用イメージ
 パスコンは省略してあります。  
-<img src="img/SampleSch.jpg" width="800">  
+<img src="img/I2C2SPI_sample.jpg" width="800">  
   
 ## ピンアサイン
 STQFN Pin # | TSSOP Pin # | 機能名 | IO | 内蔵抵抗 | SLG46826端子名 | 機能
