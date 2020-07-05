@@ -7,12 +7,13 @@ I2CインタフェースからSPIに対応したデバイスへのアクセス�
   
 ## 機能
 - スレーブアドレス指定で最大4つのSPIデバイスへのアクセスが可能
-- 一部のLCD特有のSPIインタフェースに対応
-- リードアフターライト形式のSPIに対応
-- ライト中のデータリードには非対応
-- 双方向データ端子に対応
-- 4chのGPIOが利用可能
-- I2C入力に約10kΩのプルアップ抵抗を内蔵
+- アドレス指定してリードするタイプのSPIデバイスに対応
+- 一部のLCD特有の4線式SPIインタフェースに対応
+- SPIのデータ端子の双方向通信に対応
+- 4つのGPIO端子が利用可能
+- I2C端子に約10kΩのプルアップ抵抗を内蔵
+- SPIのSI,SO端子に約100kΩのプルダウン抵抗を内蔵
+- GPIO端子に約100kΩのプルアップ抵抗を内蔵
   
 ### 本デザインの使用イメージ
 パスコンは省略してあります。  
@@ -33,20 +34,21 @@ STQFN Pin # | TSSOP Pin # | 機能名 | IO | 内蔵抵抗 | SLG46826端子名 | 
 10 | 11 | DC | O | - | IO6 | data / command select for LCD
 11 | 10 | GND |  |  | GND |  GND
 12 | 9 | SCK | O | - | IO7 | Serial Clock Output
-13 | 8 | SO | I/O | PU1M | IO8 | Serial Data Output (or Input)
+13 | 8 | SO | I/O | PD100k | IO8 | Serial Data Output (or Input)
 14 | 7 | VDD2 |  |  | VDD2 |  2.3V～5.5V
-15 | 6 | SI | I | PU1M | IO9 | Serial Data Input
+15 | 6 | SI | I | PD100k | IO9 | Serial Data Input
 16 | 5 | NC | - | PU10k | IO10 | Do Not Connect (internal use)
-17 | 4 | GPIO0 | I/O | PU1M | IO11 | general-purpose input/output 0
-18 | 3 | GPIO1 | I/O | PU1M | IO12 | general-purpose input/output 1
-19 | 2 | GPIO2 | I/O | PU1M | IO13 | general-purpose input/output 2
-20 | 1 | GPIO3 | I/O | PU1M | IO14 | general-purpose input/output 3
+17 | 4 | GPIO0 | I/O | PU100k | IO11 | general-purpose input/output 0
+18 | 3 | GPIO1 | I/O | PU100k | IO12 | general-purpose input/output 1
+19 | 2 | GPIO2 | I/O | PU100k | IO13 | general-purpose input/output 2
+20 | 1 | GPIO3 | I/O | PU100k | IO14 | general-purpose input/output 3
   
 ### 内蔵抵抗
-各端子の内蔵抵抗を有効にしてありますので、I2Cの外付けプルアップ抵抗を省略できます。  
+各端子の内蔵抵抗を有効にしてありますので、外付けプルアップ／プルダウン抵抗を省略できます。  
 記号はおおよその抵抗値を表しており、値は以下の通りです。  
 - PU10k: Pull-up 10k ohm  
-- PU1M: Pull-up 1M ohm  
+- PD100k Pudown-up 100k ohm  
+- PU100k Pull-up 100k ohm  
   
 ### スレーブアドレス
 SPIデバイスの選択は7ビットのI2Cのスレーブアドレスの下位2ビットで行います。  
@@ -63,21 +65,22 @@ SS3 | xxxxx11 | 1010111 | 0x57
   
 ## コンフィギュレーションレジスタ
 SLG46826のスレーブアドレスは、0x08～0x0Fです。  
-スレーブアドレス0x08のI2Cレジスタを書き換えることでデバイスの動作を制御できます。
+※スレーブアドレスを変更するには設計ツールでI2Cのプロパティを書き換えてください。  
+スレーブアドレス0x08のI2Cレジスタを書き換えることでデバイスの動作を制御できます。  
+スレーブアドレス0x09~0x0Fは回路コンフィグ用に予約されていますので、不用意にアクセスを行わないでください。  
 レジスタ一覧を下記に示します。  
-動作が保証できませんので、他のI2Cレジスタへは書き込みを行わないでください。  
-0x08以外は回路コンフィグ用に予約されていますのでアクセスしないでください。  
-変更するには設計ツールでI2Cのプロパティを書き換えてください。  
   
 address | W/R | default| bit | Definition 
 --- | --- | --- | ---| ---
 0x92 | W | 0x54 | [7] | Reserve
 　 | | | [6:2] | Slave address[6:2] for SPI function | 
 　 | | | [1:0] | Reserve | 
-0x03 | W |0x46 | [7:0] | SO timing<BR>0x46: SPI mode 0 or 2, 0x50: SPI mode 1 or 3
-0x90 | W |0x88 | [7:0] | SCK polarity<BR>0x88: SPI mode 0 or 1, 0x87: SPI mode 2 or 3
-0x0C | W |0x3F | [7:0] | Bidirectional SO support for reading<BR>0x3F:normal, 0x5B:SS0, 0x6B:SS2, 0x6A:SS3, 0x55:SS0 and SS1, 0x56:SS0 and SS2, 0x42:SS1 and SS3, 0x40:always
-0xC0 | W |0x00 | [7:0] | Software reset<BR>0x02: Reset
+0x3A | W | 0x66 | [7:0] | SO timing<BR>0x66: SPI mode 0 or 2, 0x46: SPI mode 1 or 3
+0x3B | W | 0x4E | [7:0] | SO timing<BR>0x4E: SPI mode 0 or 2, 0x4D: SPI mode 1 or 3
+0x9B | W | 0x13 | [7:0] | SCK polarity<BR>0x13: SPI mode 0 or 1, 0x03: SPI mode 2 or 3
+0x13 | W | 0x85 | [7:0] | Bidirectional SO support for reading<BR>0x85:SI, 0x75:SO
+0x9C | W | 0x08 | [7:0] | read FIFO depth select<BR>0x08:FIFO=9, 0x07:FIFO=8
+0xC0 | W | 0x00 | [7:0] | Software reset<BR>0x02: Reset
 0x7A | W | 0x00 | [7:6] | GPIO3 control<BR>00:input, 01:reserve, 10:output 0, 11:output 1 
 　 | | | [5:4] | GPIO2 control<BR>00:input, 01:reserve, 10:output 0, 11:output 1 | 
 　 | | | [3:2] | GPIO1 control<BR>00:input, 01:reserve, 10:output 0, 11:output 1 | 
@@ -90,17 +93,23 @@ address | W/R | default| bit | Definition
 　 |  |  | [1:0] | Reserve | 
     
 ### SPIモード
-電源投入後にSLG46826のI2Cレジスタを書き換えることで、SPIの動作モードを切り替えることができます。
+電源投入後にSLG46826のI2Cレジスタのアドレス0x3A,0x3B,0x9Bを書き換えることで、SPIの動作モードを切り替えることができます。
+設定は全てのSPIスレーブで共通です。  
+使い分けが必要な場合は、SPIライトまたはリードの前にその都度レジスタを設定してください。
 SPIのデフォルトはモード0です。  
+  
+本デバイスで想定しているSPIモードの一覧を示します。
+<img src="img/mode.jpg" width="640">  
   
 ### LCD対応
 一部のLCDのSPIインタフェースにはデータとコマンドを区別するためのDC端子もしくはRS端子が追加されています。  
 本デバイスのDC端子はこの端子と接続することを意図しています。  
 DC端子からはデータ出力の2バイト目でLowからHighになる信号が出力されます。  
-また、データ端子が双方向になっているものもあります。  
-データリード時にデータ端子が出力に切り替わるデバイスに対応するには、SLG46826のI2Cレジスタのアドレス0x0Cの設定を行ってください。  
-選択したSSのリードアドレス時にSOが入力に切り替わり、その端子からデータをリードできます。  
   
+また、データ端子が双方向になっているものもあります。  
+データリード時にデータ端子が出力に切り替わるデバイスに対応するには、SLG46826のI2Cレジスタのアドレス0x13の設定を行ってください。  
+使い分けが必要な場合は、SPIリードの前にその都度レジスタを設定してください。
+
 ### GPIO
 また、動作中にSLG46826のI2Cレジスタを書き換えることで、GPIOを用いた入出力を行えます。  
 GPIOのデフォルトは全端子入力状態です。  
@@ -108,6 +117,19 @@ GPIOのデフォルトは全端子入力状態です。
 ### ソフトウェアリセット
 SLG46826のI2Cレジスタのアドレス0xC0に0x02を書き込むことで、SLG46826にリセットをかけることができます。  
 リセット後はSLG46826が初期化され、端子設定やSPI動作モードなどが初期状態に戻ります。  
+
+## タイミングチャート
+### ライトとアドレス指定リード
+I2CフォーマットとSPIフォーマットの間の基本的なタイミングチャートは以下の通りです。  
+SPIデバイスの多くはリード前にアドレス指定が必要ですので、こちらのフォーマットでリードアクセスしてください。  
+ライトデータにはアドレスなどのSPIへの送信データを指定し、リピーティッドスタートでリードを行います。
+リードデータの1バイト目にライト時の受信データが、リードデータの2バイト目からライト後の受信データを順にリードできます。  
+<img src="img/timing01.jpg" width="860">  
+
+### リード
+リードを単体で実行することもできますが、bitがずれる可能性が高いのでI2Cレジスタのアドレス0x9Cで調整してください。  
+タイミングチャートは以下の通りです。  
+<img src="img/timing02.jpg" width="856">  
 
 ## 設計データ
 「GreenPAK6 Designer」で  
