@@ -83,10 +83,8 @@ address | W/R | default| bit | Definition
 0x9B | W | 0x13 | [7:0] | SCK polarity<BR>0x13: SPI mode 0 or 1, 0x03: SPI mode 2 or 3
 0x13 | W | 0x85 | [7:0] | Bidirectional SO support for reading<BR>0x85:SI, 0x75:SO
 0xC0 | W | 0x00 | [7:0] | Software reset<BR>0x02: Reset
-0x7A | W | 0x00 | [7:6] | GPIO3 control<BR>00:input, 01:reserve, 10:output 0, 11:output 1 
-　 | | | [5:4] | GPIO2 control<BR>00:input, 01:reserve, 10:output 0, 11:output 1 | 
-　 | | | [3:2] | GPIO1 control<BR>00:input, 01:reserve, 10:output 0, 11:output 1 | 
-　 | | | [1:0] | GPIO0 control<BR>00:input, 01:reserve, 10:output 0, 11:output 1 | 
+0x7A | W | 0x00 | [7:4] | GPIO direction control<BR>0:input, 1:output<BR>[7]:GPIO3<BR>[6]:GPIO2<BR>[5]:GPIO1<BR>[4]:GPIO0
+　 | | | [3:0] | GPIO output value<BR>0:Low, 1:High<BR>[3]:GPIO3<BR>[2]:GPIO2<BR>[1]:GPIO1<BR>[0]:GPIO0
 0x75 | R | -- | [7:6] | Reserve 
 　 |  |  | [5] | GPIO3 input value 0:Low, 1: High | 
 　 |  |  | [4] | GPIO2 input value 0:Low, 1: High | 
