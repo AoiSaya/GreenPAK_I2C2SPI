@@ -82,7 +82,6 @@ address | W/R | default| bit | Definition
 0x9A | W | 0x58 | [7:0] | SO timing<BR>0x58: SPI mode 0 or 2, 0x78: SPI mode 1 or 3
 0x9B | W | 0x13 | [7:0] | SCK polarity<BR>0x13: SPI mode 0 or 1, 0x03: SPI mode 2 or 3
 0x13 | W | 0x85 | [7:0] | Bidirectional SO support for reading<BR>0x85:read by SI, 0x75:read by SO
-0x3B | W | 0xFC | [7:0] | Bidirectional SO support for reading<BR>0xFC:SO is output only, 0xB4:SO is bidirectional
 0xC8 | W | 0x00 | [7:0] | Software reset<BR>0x02: Reset
 0x7A | W | 0x00 | [7:4] | GPIO direction control<BR>0:input, 1:output<BR>[7]:GPIO3<BR>[6]:GPIO2<BR>[5]:GPIO1<BR>[4]:GPIO0
 　 | | | [3:0] | GPIO output value<BR>0:Low, 1:High<BR>[3]:GPIO3<BR>[2]:GPIO2<BR>[1]:GPIO1<BR>[0]:GPIO0
@@ -94,7 +93,7 @@ address | W/R | default| bit | Definition
 　 |  |  | [1:0] | Reserve | 
     
 ### SPIモード
-電源投入後にSLG46826のI2Cレジスタのアドレス0x3A,0x3B,0x9Bを書き換えることで、SPIの動作モードを切り替えることができます。
+電源投入後にSLG46826のI2Cレジスタのアドレス0x9A,0x9Bを書き換えることで、SPIの動作モードを切り替えることができます。
 設定は全てのSPIスレーブで共通です。  
 使い分けが必要な場合は、SPIライトまたはリードの前にその都度レジスタを設定してください。
 SPIのデフォルトはモード0です。  
@@ -118,7 +117,7 @@ SLG46826のI2Cレジスタを書き換えることで、GPIOを用いた入出�
 GPIOのデフォルトは全端子入力かつ100kΩプルアップ状態です。  
   
 ### ソフトウェアリセット
-SLG46826のI2Cレジスタのアドレス0xC0に0x02を書き込むことで、SLG46826にリセットをかけることができます。  
+SLG46826のI2Cレジスタのアドレス0xC8に0x02を書き込むことで、SLG46826にリセットをかけることができます。  
 リセット後はSLG46826が初期化され、端子設定やSPI動作モードなどが初期状態に戻ります。  
 
 ## タイミングチャート
