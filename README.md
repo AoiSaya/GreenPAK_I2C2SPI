@@ -76,13 +76,14 @@ SLG46826のスレーブアドレスは、0x08～0x0Fです。
   
 address | W/R | default| bit | Definition 
 --- | --- | --- | ---| ---
-0x92 | W | 0x54 | [7] | Reserve
+0x92 | W | 0x0B | [7] | Reserve
 　 | | | [6:2] | Slave address[6:2] for SPI function | 
 　 | | | [1:0] | Reserve | 
 0x9A | W | 0x58 | [7:0] | SO timing<BR>0x58: SPI mode 0 or 2, 0x78: SPI mode 1 or 3
 0x9B | W | 0x13 | [7:0] | SCK polarity<BR>0x13: SPI mode 0 or 1, 0x03: SPI mode 2 or 3
-0x13 | W | 0x85 | [7:0] | Bidirectional SO support for reading<BR>0x85:SI, 0x75:SO
-0xC0 | W | 0x00 | [7:0] | Software reset<BR>0x02: Reset
+0x13 | W | 0x85 | [7:0] | Bidirectional SO support for reading<BR>0x85:read by SI, 0x75:read by SO
+0x3B | W | 0xFC | [7:0] | Bidirectional SO support for reading<BR>0xFC:SO is output only, 0xB4:SO is bidirectional
+0xC8 | W | 0x00 | [7:0] | Software reset<BR>0x02: Reset
 0x7A | W | 0x00 | [7:4] | GPIO direction control<BR>0:input, 1:output<BR>[7]:GPIO3<BR>[6]:GPIO2<BR>[5]:GPIO1<BR>[4]:GPIO0
 　 | | | [3:0] | GPIO output value<BR>0:Low, 1:High<BR>[3]:GPIO3<BR>[2]:GPIO2<BR>[1]:GPIO1<BR>[0]:GPIO0
 0x75 | R | -- | [7:6] | Reserve 
