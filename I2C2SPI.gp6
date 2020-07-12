@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<GPDProject version="10" oldestCompatibleVersion="9" GPDVersion="6.21.005" lastChange="2020/07/12 19:09">
+<GPDProject version="10" oldestCompatibleVersion="9" GPDVersion="6.21.005" lastChange="2020/07/12 20:16">
     <generalProjectSettings/>
     <chip family="04" type="06" friendlyName="GreenPAK 6" partNumber="36" package="7">
-        <nvmData registerLenght="2048">52 E9 BD 6A A5 56 9C 99 7A 68 9A 61 93 28 A5 53 51 52 68 8B F8 16 10 19 A4 2B BA 29 7B 1A 6E 6A AA 55 5A A0 AE 9B 4A 86 51 58 1E 0 0 0 0 0 0 0 AC 95 FA 40 0 0 5C E1 E6 FC 0 0 14 30 1D D7 B2 3D DF 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 80 50 0 80 80 51 51 0 0 84 84 25 0 21 50 64 64 64 64 0 0 0 0 0 0 0 0 0 0 0 0 7 3 0 4 0 14 22 30 C 0 0 0 0 0 0 0 B8 47 B 0 0 0 AC 0 7F 34 58 11 67 1A 0 0 2 FF 9F 29 2 3 0 54 7F E2 8 30 70 22 5 11 6C 0 12 6 21 EF 22 1 7 64 F2 20 5 A8 40 12 D 8 6 60 0 0 2 0 0 0 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 A5</nvmData>
-        <checksum crc32="0x8FE31908" version="7"/>
+        <nvmData registerLenght="2048">52 E9 BD 6A A5 56 9C 99 7A 68 9A 61 93 28 A5 53 51 52 68 8B F8 16 10 19 A4 2B BA 29 7B 1A 6E 6A AA 55 5A A0 AE 9B 4A 86 51 58 1E 0 0 0 0 0 0 0 AC 95 FA 40 0 0 5C E1 E6 B4 0 0 14 30 1D D7 B2 3D DF 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 80 50 0 80 80 51 51 0 0 84 84 25 0 21 50 64 64 64 64 0 0 0 0 0 0 0 0 0 0 0 0 7 3 0 4 0 14 22 30 C 0 0 0 0 0 0 0 B8 47 B 0 0 0 AC 0 7F 34 58 11 67 1A 0 0 2 FF 9F 29 2 3 0 54 7F E2 8 30 70 22 5 11 6C 0 12 6 21 EF 22 1 7 64 F2 20 5 A8 40 12 D 8 6 60 0 0 2 0 0 0 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 A5</nvmData>
+        <checksum crc32="0x451EE232" version="7"/>
         <asmModel>
             <stateMachine>
                 <asmModel version="2">
@@ -642,8 +642,8 @@
         <wire output="56" input="540" autoRouting="1" pen="#00ff00ff;1.00;1;32;128" protected="0" CWLid="42" wireText="NET42" wireState="0">
             <points>(476.00,-64.00); (645.00,-64.00); (645.00,34.00); (705.00,34.00); (705.00,11.00)</points>
         </wire>
-        <wire output="0" input="522" autoRouting="1" pen="#00ff00ff;1.00;1;32;128" protected="0" CWLid="-1" wireText="VDD" wireState="1">
-            <points/>
+        <wire output="203" input="522" autoRouting="1" pen="#00ff00ff;1.00;1;32;128" protected="0" CWLid="9" wireText="NET9" wireState="0">
+            <points>(66.00,1055.00); (704.00,1055.00); (704.00,1076.00)</points>
         </wire>
     </chip>
     <emulatorConfiguration version="1">
