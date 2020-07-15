@@ -66,8 +66,8 @@ STQFN Pin # | TSSOP Pin # | 機能名 | IO | 内蔵抵抗 | SLG46826端子名 | 
 - PU100k Pull-up 100k ohm  
   
 ## SPIデバイスの選択
-SPIデバイスの選択は、I2Cアドレスの下位2ビットで行います。  
-上位5ビットはコンフィギュレーションレジスタで変更することができます。  
+SPIデバイスの選択は、I2Cアドレスの下位2ビット([1:0])で行います。  
+上位5ビット([6:2])はコンフィギュレーションレジスタで変更することができます。  
 (設計ツール上でPGENのデータを書き換えてもかまいません)  
 デフォルト値におけるSS0～SS3とデバイスアドレスとの対応は以下の通りです。  
   
@@ -105,9 +105,9 @@ High | High | 0111xxx | 0x38<BR>0x38~0x3F | for configuration<BR>reserved
   
 address | W/R | default| bit | Definition 
 --- | --- | --- | ---| ---
-0x92 | W | 0x0B | [7] | *Reserve*
-　 | | | [6:2] | *I2C address[6:2] for SPI function* | 
-　 | | | [1:0] | *Reserve* | 
+0x92 | W | 0x0B | [7:5] | *Reserve*
+　 | | | [4:1] | *I2C address[5:2] for SPI function* | 
+　 | | | [0] | *I2C address[6] for SPI function* | 
 0x9A | W | 0x58 | [7:0] | *SO timing*<BR>0x58: SPI mode 0 or 2, 0x78: SPI mode 1 or 3
 0x9B | W | 0x13 | [7:0] | *SCK polarity*<BR>0x13: SPI mode 0 or 1, 0x03: SPI mode 2 or 3
 0x13 | W | 0x85 | [7:0] | *Bidirectional SO support for reading*<BR>0x85:read by SI, 0x75:read by SO
